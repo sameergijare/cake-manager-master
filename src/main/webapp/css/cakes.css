@@ -1,0 +1,19 @@
+img {
+    width : 100px;
+    height : 100px;
+}
+
+#cakes {
+    float:left;
+    margin: 25px;
+}
+
+#cake {
+    width:250px;
+    height:250px;
+    display: inline-block;
+}
+
+#addcake {
+    margin: 25px;
+}

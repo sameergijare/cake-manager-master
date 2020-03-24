@@ -1,0 +1,64 @@
+#CHANGELIST#
+
+If I had added new dependencies and use other technologies I would have considered the following:
+- Log4j (or similar) to replace the System.out/err calls
+- Spring for a number of reasons but primarily dependency injection,improved testability and OAUTH2 authentication
+- Mockito (or EasyMock) to add more complete unit testing currently using Junit
+
+/pom.xml
+- added the databind jackson dependency (technically not new dep as Jackson already in use)
+- fixed the version of the maven jetty plugin
+
+/src/main/webapp/WEB_INF/web.xml
+- corrected the version mismatch in the web.xml file
+- updated the display name
+
+/src/main/java/com.waracle.cakemgr
+- renamed to be 3 separate, nested directories i.e. com/waracle/cakemgr/
+
+/src/main/java/com/waracle/cakemgr/AdminAuthenticationFilter.java
+-Filter for intercepting the requests and embedding authentication and authorization mechanism
+-implementation is left open to user imagination or third party software like LDAP or Oauth2
+
+/src/main/java/com/waracle/cakemgr/CakeEntity.java
+- removed deprecated org.hibernate.annotations.Entity annotation and replaced with @DynamicUpdate
+- changed table name from Employees to Cakes (ps. I have nothing against employees :))
+- updated other table column mappings in annotations to reflect class member names
+- removed setting unique to false as that is the default
+- updated the serial version UID to reflect new version of class
+
+/src/main/java/com/waracle/cakemgr/CakeServlet.java
+- simplified this class do focus only on the initialisation and the handling the http get/put calls
+- changed to handle both of the reqired url patterns
+- delegates to the new CakeService for everything else
+
+/src/main/java/com/waracle/cakemgr/CakeService.java
+- added to contain the cake service layer implementation
+
+/src/main/java/com/waracle/cakemgr/CakeDao.java
+- added to hold the data access layer for the CakeEntity
+
+/src/main/java/com/waracle/cakemgr/SimpleHttpClient.java
+- added to provide simple http functionality for the intitial DB load from remote url
+
+/src/main/java/com/waracle/cakemgr/HibernateUtil.java
+- made final and added private constructor prevent instantiation
+- changed from catching Throwable to Exception (still nasty but better for now)
+- refactored to allow the database to be shutdown and recreated
+
+/src/main/webapp/cakes.html
+- new html file to render the cake info in a user readable way
+
+/src/main/webapp/js/cakes.js
+- new javascript(jquery) file to handle the initial cake load via the GET (JSON) api AND the form submisson to the PUT endpoint
+
+/src/main/webapp/css/cakes.css
+- simple css to format the html page slightly
+
+-   Command to run tests: mvn clean test
+
+/src/test/java/com/waracle/cakemgr/CakeServiceTest.java
+- added this class to test the cake service
+
+/src/test/java/com/waracle/cakemgr/CakeDaoTest.java
+- added this class to test the cake dao
